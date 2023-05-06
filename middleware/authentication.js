@@ -8,7 +8,7 @@ const authentication = async (req,res,next)=>{
         if(!token){
             return res.status(401).json({"result":"Not a authorized user!"});
         }
-        token = req.headers.authorizations.split(" ")[1];
+        token = req.headers.authorizations;
 
         const validToken = await jwt.verify(token, process.env.Key);
 
@@ -20,7 +20,7 @@ const authentication = async (req,res,next)=>{
         next();
 
     } catch (error) {
-        res.status(400).send("error",error)
+        res.status(400).send({"error":error.message})
     }
 }
 
